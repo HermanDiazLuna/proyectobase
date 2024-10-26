@@ -14,4 +14,5 @@ public class Empleado {
     private Integer id;
     private String cedula;
     private String nombre;
+    private String estado;
 }

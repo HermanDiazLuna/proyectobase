@@ -20,5 +20,6 @@ public class EmpleadoEntity {
     private Integer id;
     private String cedula;
     private String nombre;
+    private String estado;
 
 }
