@@ -1,0 +1,26 @@
+package com.project.base.proyectobase.infrastructure.entry_point.exception;
+
+import com.project.base.proyectobase.domain.model.exception.BusinessException;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.time.LocalDateTime;
+
+@ControllerAdvice
+public class ControladorExcepciones {
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<?> manejarEmpleadoNoEncontrado(BusinessException ex, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiError.builder()
+                        .backenMessage(ex.getLocalizedMessage())
+                        .url(request.getRequestURL().toString())
+                        .method(request.getMethod())
+                        .timeStamp(LocalDateTime.now())
+                        .message(ex.getMessage())
+                .build());
+    }
+
+}

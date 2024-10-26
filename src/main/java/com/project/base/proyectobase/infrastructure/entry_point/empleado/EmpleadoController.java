@@ -25,6 +25,11 @@ public class EmpleadoController {
         return ResponseEntity.ok(List.of(Empleado.builder().id(1).cedula("12345").nombre("Alex Perez").build()));
     }
 
+    @GetMapping("/buscar-por-cedula/{cedula}")
+    public ResponseEntity<EmpleadoDTO> consultarEmpleado(@PathVariable("cedula") String cedula){
+        return ResponseEntity.ok(empleadoTransformer.empleadoToEmpleadoDTO(empleadoUseCase.consultarEmpleado(cedula)));
+    }
+
     @PostMapping("/guardar-empleado")
     public ResponseEntity<EmpleadoDTO> guardarEmpleado(@RequestBody EmpleadoDTO empleadoDTO){
         Empleado empleado = empleadoUseCase.guardarEmpleado(empleadoTransformer.empleadoDTOToEmpleado(empleadoDTO));

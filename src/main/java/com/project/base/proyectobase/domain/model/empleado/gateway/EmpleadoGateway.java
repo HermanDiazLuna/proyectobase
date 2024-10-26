@@ -5,4 +5,6 @@ import com.project.base.proyectobase.domain.model.empleado.Empleado;
 public interface EmpleadoGateway {
 
     Empleado guardarEmpleado(Empleado empleado);
+
+    Empleado consultarEmpleado(String cedula);
 }
