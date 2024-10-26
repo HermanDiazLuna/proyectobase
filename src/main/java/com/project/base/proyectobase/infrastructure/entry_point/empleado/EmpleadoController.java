@@ -1,6 +1,9 @@
 package com.project.base.proyectobase.infrastructure.entry_point.empleado;
 
 import com.project.base.proyectobase.domain.model.empleado.Empleado;
+import com.project.base.proyectobase.domain.usecase.empleado.EmpleadoUseCase;
+import com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper.EmpleadoDTO;
+import com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper.EmpleadoTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +15,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmpleadoController {
 
+    private final EmpleadoUseCase empleadoUseCase;
+
+    private final EmpleadoTransformer empleadoTransformer;
+
     @GetMapping("/buscar-todos")
     public ResponseEntity<?> crearEmpleado(){
 
         return ResponseEntity.ok(List.of(Empleado.builder().id(1).cedula("12345").nombre("Alex Perez").build()));
+    }
+
+    @PostMapping("/guardar-empleado")
+    public ResponseEntity<EmpleadoDTO> guardarEmpleado(@RequestBody EmpleadoDTO empleadoDTO){
+        Empleado empleado = empleadoUseCase.guardarEmpleado(empleadoTransformer.empleadoDTOToEmpleado(empleadoDTO));
+        return ResponseEntity.ok(empleadoTransformer.empleadoToEmpleadoDTO(empleado));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.project.base.proyectobase.infrastructure.entry_point.empleado.dto;
+package com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmpleadoRequestDTO {
+public class EmpleadoDTO {
 
     private Integer id;
     private String cedula;
