@@ -1,6 +1,4 @@
-package com.project.base.proyectobase.infrastructure.driven_adapter.empleado;
-
-import jakarta.persistence.*;
+package com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "empleados")
-public class EmpleadoEntity {
+public class EmpleadoDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String cedula;
     private String nombre;
-
 }
