@@ -36,4 +36,14 @@ public class EmpleadoController {
         return ResponseEntity.ok(empleadoTransformer.empleadoToEmpleadoDTO(empleado));
     }
 
+    @PutMapping("/actualizar-empleado/{cedula}")
+    public ResponseEntity<EmpleadoDTO> actualizarEmpleado(@RequestBody EmpleadoDTO empleadoDTO, @PathVariable String cedula){
+        Empleado empleadoActualizado = empleadoUseCase.actualizarEmpleado(empleadoTransformer.empleadoDTOToEmpleado(empleadoDTO),cedula);
+        return ResponseEntity.ok().body(empleadoTransformer.empleadoToEmpleadoDTO(empleadoActualizado));
+    }
+
+    @PutMapping("/eliminar-empleado/{cedula}")
+    public void eliminarEmpleado(@PathVariable String cedula){
+        empleadoUseCase.eliminarEmpleado(cedula);
+    }
 }

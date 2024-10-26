@@ -7,4 +7,8 @@ public interface EmpleadoGateway {
     Empleado guardarEmpleado(Empleado empleado);
 
     Empleado consultarEmpleado(String cedula);
+
+    Empleado actualizarEmpleado(Empleado empleado);
+
+    void eliminarEmpleado(Empleado empleado);
 }
