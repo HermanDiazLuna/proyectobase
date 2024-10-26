@@ -23,8 +23,9 @@ public class EmpleadoAdapter implements EmpleadoGateway {
 
     @Override
     public Empleado consultarEmpleado(String cedula) {
-        return empleadoRepository.findByCedula(cedula).map(empleadoAdapterTransformer::empleadoEntityToEmpleado)
-                .orElseThrow(()-> new BusinessException(BusinessException.Type.EMPLEADO_NO_EXISTE));
+        return empleadoRepository.findByCedula(cedula)
+                .map(empleadoAdapterTransformer::empleadoEntityToEmpleado)
+                .orElse(null);
     }
 
 }
