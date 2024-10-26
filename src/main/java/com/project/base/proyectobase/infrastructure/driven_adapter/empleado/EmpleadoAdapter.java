@@ -2,7 +2,6 @@ package com.project.base.proyectobase.infrastructure.driven_adapter.empleado;
 
 import com.project.base.proyectobase.domain.model.empleado.Empleado;
 import com.project.base.proyectobase.domain.model.empleado.gateway.EmpleadoGateway;
-import com.project.base.proyectobase.domain.model.exception.BusinessException;
 import com.project.base.proyectobase.infrastructure.driven_adapter.empleado.mapper.EmpleadoAdapterTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,6 +25,17 @@ public class EmpleadoAdapter implements EmpleadoGateway {
         return empleadoRepository.findByCedula(cedula)
                 .map(empleadoAdapterTransformer::empleadoEntityToEmpleado)
                 .orElse(null);
+    }
+
+    @Override
+    public Empleado actualizarEmpleado(Empleado empleado) {
+        EmpleadoEntity empleadoActualizado = empleadoRepository.save(empleadoAdapterTransformer.empleadoToEmpleadoEntity(empleado));
+        return empleadoAdapterTransformer.empleadoEntityToEmpleado(empleadoActualizado);
+    }
+
+    @Override
+    public void eliminarEmpleado(Empleado empleado) {
+        empleadoRepository.save(empleadoAdapterTransformer.empleadoToEmpleadoEntity(empleado));
     }
 
 }

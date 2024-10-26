@@ -6,7 +6,9 @@ public class BusinessException extends ApplicationException{
 
     public enum Type {
 
-        EMPLEADO_NO_EXISTE("Empleado no existe!");
+        EMPLEADO_NO_EXISTE("Empleado no existe!"),
+
+        EMPLEADO_ELIMINADO("El empleado está inactivo");
 
         private final String message;
 
