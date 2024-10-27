@@ -12,6 +12,17 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ControladorExcepciones {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handlerGenericException(HttpServletRequest request, Exception exception){
+        ApiError apiError = new ApiError();
+        apiError.setBackenMessage(exception.getLocalizedMessage());
+        apiError.setUrl(request.getRequestURL().toString());
+        apiError.setMethod(request.getMethod());
+        apiError.setTimeStamp(LocalDateTime.now());
+        apiError.setMessage("Error interno en el servidor, vuelva a intentarlo");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
+    }
+
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<?> manejarEmpleadoNoEncontrado(BusinessException ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiError.builder()
