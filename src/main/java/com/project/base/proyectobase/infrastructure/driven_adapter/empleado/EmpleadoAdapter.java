@@ -6,6 +6,9 @@ import com.project.base.proyectobase.infrastructure.driven_adapter.empleado.mapp
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 @RequiredArgsConstructor
 public class EmpleadoAdapter implements EmpleadoGateway {
@@ -36,6 +39,14 @@ public class EmpleadoAdapter implements EmpleadoGateway {
     @Override
     public void eliminarEmpleado(Empleado empleado) {
         empleadoRepository.save(empleadoAdapterTransformer.empleadoToEmpleadoEntity(empleado));
+    }
+
+    @Override
+    public List<Empleado> buscarTodos() {
+        List<EmpleadoEntity> empleadosActivos = empleadoRepository.findByEstado("ACTIVO");
+        return empleadosActivos.stream()
+                .map(empleadoAdapterTransformer::empleadoEntityToEmpleado)
+                .collect(Collectors.toList());
     }
 
 }

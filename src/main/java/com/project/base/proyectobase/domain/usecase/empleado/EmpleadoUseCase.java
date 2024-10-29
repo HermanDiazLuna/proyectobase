@@ -5,7 +5,9 @@ import com.project.base.proyectobase.domain.model.empleado.gateway.EmpleadoGatew
 import com.project.base.proyectobase.domain.model.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class EmpleadoUseCase {
@@ -47,5 +49,13 @@ public class EmpleadoUseCase {
         if (Objects.isNull(empleado)) throw new BusinessException(BusinessException.Type.EMPLEADO_NO_EXISTE);
         if (empleado.getEstado().equals(INACTIVO)) throw new BusinessException(BusinessException.Type.EMPLEADO_ELIMINADO);
     }
+
+    public List<Empleado> buscarTodosLosEmpleados(){
+        return empleadoGateway.buscarTodos()
+                .stream()
+                .filter(empleado -> ACTIVO.equals(empleado.getEstado()))
+                .collect(Collectors.toList());
+    }
+
 
 }

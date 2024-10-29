@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,9 +21,10 @@ public class EmpleadoController {
     private final EmpleadoTransformer empleadoTransformer;
 
     @GetMapping("/buscar-todos")
-    public ResponseEntity<?> crearEmpleado(){
-
-        return ResponseEntity.ok(List.of(Empleado.builder().id(1).cedula("12345").nombre("Alex Perez").build()));
+    public ResponseEntity<List<EmpleadoDTO>> buscarTodosLosEmpleados() {
+        List<Empleado> empleadoList = empleadoUseCase.buscarTodosLosEmpleados();
+        List<EmpleadoDTO> empleadoDTOList = empleadoTransformer.listaEmpleadosToListaEmpleadosDTO(empleadoList);
+        return ResponseEntity.ok().body(empleadoDTOList);
     }
 
     @GetMapping("/buscar-por-cedula/{cedula}")
