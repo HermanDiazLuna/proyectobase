@@ -4,12 +4,10 @@ import com.project.base.proyectobase.domain.model.empleado.Empleado;
 import com.project.base.proyectobase.domain.model.empleado.gateway.EmpleadoGateway;
 import com.project.base.proyectobase.domain.model.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
+
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class EmpleadoUseCase {

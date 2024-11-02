@@ -6,12 +6,9 @@ import com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper.
 import com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper.EmpleadoTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.data.domain.Pageable;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -25,7 +22,6 @@ public class EmpleadoController {
     @GetMapping("/buscar-todos/{estado}")
     public ResponseEntity<Page<Empleado>> buscarTodosLosEmpleados(@PathVariable String estado, Pageable pageable) {
         Page<Empleado> empleadoList = empleadoUseCase.buscarTodosLosEmpleados(estado, pageable);
-        //Page<EmpleadoDTO> empleadoDTOS = empleadoTransformer.listaEmpleadosToListaEmpleadosDTO(empleadoList);
         return ResponseEntity.ok().body(empleadoList);
     }
 
