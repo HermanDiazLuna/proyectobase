@@ -8,7 +8,9 @@ public class BusinessException extends ApplicationException{
 
         EMPLEADO_NO_EXISTE("Empleado no existe!"),
 
-        EMPLEADO_ELIMINADO("El empleado está inactivo");
+        EMPLEADO_ELIMINADO("El empleado está inactivo"),
+
+        USUARIO_NO_EXISTE("El usuario no existe");
 
         private final String message;
 
