@@ -10,4 +10,5 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity, Intege
 
     Optional<EmpleadoEntity> findByCedula(String cedula);
     List<EmpleadoEntity> findByEstado(String estado);
+
 }

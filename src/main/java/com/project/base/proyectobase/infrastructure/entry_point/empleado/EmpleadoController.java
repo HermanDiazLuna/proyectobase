@@ -5,9 +5,11 @@ import com.project.base.proyectobase.domain.usecase.empleado.EmpleadoUseCase;
 import com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper.EmpleadoDTO;
 import com.project.base.proyectobase.infrastructure.entry_point.empleado.mapper.EmpleadoTransformer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,11 @@ public class EmpleadoController {
 
     private final EmpleadoTransformer empleadoTransformer;
 
-    @GetMapping("/buscar-todos")
-    public ResponseEntity<List<EmpleadoDTO>> buscarTodosLosEmpleados() {
-        List<Empleado> empleadoList = empleadoUseCase.buscarTodosLosEmpleados();
-        List<EmpleadoDTO> empleadoDTOList = empleadoTransformer.listaEmpleadosToListaEmpleadosDTO(empleadoList);
-        return ResponseEntity.ok().body(empleadoDTOList);
+    @GetMapping("/buscar-todos/{estado}")
+    public ResponseEntity<Page<Empleado>> buscarTodosLosEmpleados(@PathVariable String estado, Pageable pageable) {
+        Page<Empleado> empleadoList = empleadoUseCase.buscarTodosLosEmpleados(estado, pageable);
+        //Page<EmpleadoDTO> empleadoDTOS = empleadoTransformer.listaEmpleadosToListaEmpleadosDTO(empleadoList);
+        return ResponseEntity.ok().body(empleadoList);
     }
 
     @GetMapping("/buscar-por-cedula/{cedula}")

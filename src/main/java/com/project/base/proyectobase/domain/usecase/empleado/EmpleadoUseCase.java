@@ -5,6 +5,8 @@ import com.project.base.proyectobase.domain.model.empleado.gateway.EmpleadoGatew
 import com.project.base.proyectobase.domain.model.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -50,11 +52,9 @@ public class EmpleadoUseCase {
         if (empleado.getEstado().equals(INACTIVO)) throw new BusinessException(BusinessException.Type.EMPLEADO_ELIMINADO);
     }
 
-    public List<Empleado> buscarTodosLosEmpleados(){
-        return empleadoGateway.buscarTodos()
-                .stream()
-                .filter(empleado -> ACTIVO.equals(empleado.getEstado()))
-                .collect(Collectors.toList());
+    public Page<Empleado> buscarTodosLosEmpleados(String estado, Pageable pageable){
+        return empleadoGateway.buscarTodos(pageable);
+
     }
 
 
