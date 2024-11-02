@@ -4,6 +4,8 @@ import com.project.base.proyectobase.domain.model.empleado.Empleado;
 import com.project.base.proyectobase.domain.model.empleado.gateway.EmpleadoGateway;
 import com.project.base.proyectobase.infrastructure.driven_adapter.empleado.mapper.EmpleadoAdapterTransformer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -36,6 +38,12 @@ public class EmpleadoAdapter implements EmpleadoGateway {
     @Override
     public void eliminarEmpleado(Empleado empleado) {
         empleadoRepository.save(empleadoAdapterTransformer.empleadoToEmpleadoEntity(empleado));
+    }
+
+    @Override
+    public Page<Empleado> buscarTodos(Pageable pageable) {
+        Page<EmpleadoEntity> empleadosActivos = empleadoRepository.findAll(pageable);
+        return empleadosActivos.map(empleadoAdapterTransformer::empleadoEntityToEmpleado);
     }
 
 }

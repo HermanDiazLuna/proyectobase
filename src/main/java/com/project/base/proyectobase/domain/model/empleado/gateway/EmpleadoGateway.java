@@ -1,6 +1,8 @@
 package com.project.base.proyectobase.domain.model.empleado.gateway;
 
 import com.project.base.proyectobase.domain.model.empleado.Empleado;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface EmpleadoGateway {
 
@@ -11,4 +13,6 @@ public interface EmpleadoGateway {
     Empleado actualizarEmpleado(Empleado empleado);
 
     void eliminarEmpleado(Empleado empleado);
+
+    Page<Empleado> buscarTodos(Pageable pageable);
 }
