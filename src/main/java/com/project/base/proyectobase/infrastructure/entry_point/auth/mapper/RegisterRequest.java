@@ -16,4 +16,7 @@ public class RegisterRequest {
 
     @Size(min = 8)
     private String password;
+
+    @Size(min = 8)
+    private String repeatedPassword;
 }

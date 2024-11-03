@@ -37,6 +37,7 @@ public class HttpSecurityConfig {
     }
 
     private RequestMatcher publicEndPoints(){
+        //aún no se está manejando los roles y permisos -> Autorización, solo la Autenticación.
         return new OrRequestMatcher(
                 new AntPathRequestMatcher("/api/guardar-empleado"),
                 new AntPathRequestMatcher("/api/auth/**")

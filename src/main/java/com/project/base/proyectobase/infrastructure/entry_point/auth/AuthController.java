@@ -9,10 +9,7 @@ import com.project.base.proyectobase.infrastructure.entry_point.auth.mapper.User
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -26,7 +23,8 @@ public class AuthController {
     @PostMapping("register")
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request){
         AuthResponse authResponse = transformer.tokenToAuthResponse(userUseCase.registrarUsuario(
-                User.builder().nombre(request.getNombre()).username(request.getUsername()).password(request.getPassword()).build()));
+                User.builder().nombre(request.getNombre()).username(request.getUsername())
+                        .password(request.getPassword()).repeatedPassword(request.getRepeatedPassword()).build()));
         return ResponseEntity.ok(authResponse);
     }
 
@@ -35,5 +33,10 @@ public class AuthController {
         AuthResponse authResponse = transformer.tokenToAuthResponse(
                 userUseCase.loginUsuario(User.builder().username(auth.getUsername()).password(auth.getPassword()).build()));
         return ResponseEntity.ok(authResponse);
+    }
+
+    @GetMapping("/user-logged")
+    public ResponseEntity<User> consultarUsuarioLogueado(){
+        return ResponseEntity.ok(userUseCase.consultarUsuarioLogueado());
     }
 }
