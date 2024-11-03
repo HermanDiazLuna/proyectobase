@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -38,10 +39,12 @@ public class UserEntity implements UserDetails {
         if (Objects.isNull(role))return null;
         if (Objects.isNull(role.getPermissions()))return null;
 
-        return role.getPermissions().stream()
+        List<SimpleGrantedAuthority> autorizaciones = role.getPermissions().stream()
                 .map(each -> each.name())
                 .map(each -> new SimpleGrantedAuthority(each))
                 .collect(Collectors.toList());
+        autorizaciones.add(new SimpleGrantedAuthority("ROLE_".concat(this.role.name())));
+        return autorizaciones;
     }
 
     @Override

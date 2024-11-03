@@ -10,7 +10,13 @@ public class BusinessException extends ApplicationException{
 
         EMPLEADO_ELIMINADO("El empleado está inactivo"),
 
-        USUARIO_NO_EXISTE("El usuario no existe");
+        USUARIO_NO_EXISTE("El usuario no existe"),
+
+        USERNAME_YA_EXISTE("El username ya existe en Base de Datos"),
+
+        PASSWORD_NO_COINCIDEN("La contraseña no coincide"),
+
+        PASSWORD_INVALIDO("Contraseña invalida");
 
         private final String message;
 

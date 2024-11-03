@@ -15,5 +15,6 @@ public class User {
     private String nombre;
     private String username;//email
     private String password;
+    private String repeatedPassword;
     private Role role;
 }
