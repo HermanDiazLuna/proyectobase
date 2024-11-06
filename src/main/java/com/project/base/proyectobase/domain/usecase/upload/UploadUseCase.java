@@ -16,7 +16,7 @@ public class UploadUseCase {
 
     private final EmpleadoGateway empleadoGateway;
 
-    public String cargarArchivo(MultipartFile archivo, String cedula){
+    public String cargarArchivo(MultipartFile archivo, String cedula) throws IOException {
         String nombreArchivo = "";
         Empleado empleado = empleadoGateway.consultarEmpleado(cedula);
         this.validarEmpleado(empleado);
