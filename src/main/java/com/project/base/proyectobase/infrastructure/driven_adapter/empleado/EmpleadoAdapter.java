@@ -7,10 +7,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
 public class EmpleadoAdapter implements EmpleadoGateway {
+
+    private final static String DIRECTORIO_UPLOAD = "uploads";
 
     private final EmpleadoRepository empleadoRepository;
 
@@ -44,6 +54,28 @@ public class EmpleadoAdapter implements EmpleadoGateway {
     public Page<Empleado> buscarTodos(Pageable pageable) {
         Page<EmpleadoEntity> empleadosActivos = empleadoRepository.findAll(pageable);
         return empleadosActivos.map(empleadoAdapterTransformer::empleadoEntityToEmpleado);
+    }
+
+    @Override
+    public String copiar(MultipartFile archivo) throws IOException {
+        // Generar el nombre completo del archivo con UUID y nombre original
+        String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename().replace(" ", "");
+
+        // Ruta completa del archivo, incluyendo nombre del archivo
+        Path rutaArchivo = getPath(nombreArchivo);
+
+        // Crear el directorio si no existe
+        Files.createDirectories(rutaArchivo.getParent());
+
+        // Copiar el archivo
+        Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+
+        return nombreArchivo;
+
+    }
+
+    public Path getPath(String nombreFoto) {
+        return Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto).toAbsolutePath();
     }
 
 }
