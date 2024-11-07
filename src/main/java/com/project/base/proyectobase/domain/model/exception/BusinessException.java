@@ -16,7 +16,11 @@ public class BusinessException extends ApplicationException{
 
         PASSWORD_NO_COINCIDEN("La contraseña no coincide"),
 
-        PASSWORD_INVALIDO("Contraseña invalida");
+        PASSWORD_INVALIDO("Contraseña invalida"),
+
+        UPLOAD_ERROR("Error al guardar el archivo!"),
+
+        ARCHIVO_VACIO("Debe adjuntar al menos un archivo");
 
         private final String message;
 

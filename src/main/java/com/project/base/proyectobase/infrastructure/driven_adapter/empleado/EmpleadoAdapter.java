@@ -2,6 +2,7 @@ package com.project.base.proyectobase.infrastructure.driven_adapter.empleado;
 
 import com.project.base.proyectobase.domain.model.empleado.Empleado;
 import com.project.base.proyectobase.domain.model.empleado.gateway.EmpleadoGateway;
+import com.project.base.proyectobase.domain.model.exception.BusinessException;
 import com.project.base.proyectobase.infrastructure.driven_adapter.empleado.mapper.EmpleadoAdapterTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -57,21 +58,17 @@ public class EmpleadoAdapter implements EmpleadoGateway {
     }
 
     @Override
-    public String copiar(MultipartFile archivo) throws IOException {
-        // Generar el nombre completo del archivo con UUID y nombre original
-        String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename().replace(" ", "");
-
-        // Ruta completa del archivo, incluyendo nombre del archivo
-        Path rutaArchivo = getPath(nombreArchivo);
-
-        // Crear el directorio si no existe
-        Files.createDirectories(rutaArchivo.getParent());
-
-        // Copiar el archivo
-        Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
-
-        return nombreArchivo;
-
+    public String copiar(MultipartFile archivo) {
+        try {
+            String nombreArchivo = UUID.randomUUID() + "_" + archivo.getOriginalFilename().replace(" ", "");
+            Path rutaArchivo = getPath(nombreArchivo);
+            // Crear el directorio si no existe
+            Files.createDirectories(rutaArchivo.getParent());
+            Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+            return nombreArchivo;
+        }catch (IOException exception){
+            throw new BusinessException(BusinessException.Type.UPLOAD_ERROR);
+        }
     }
 
     public Path getPath(String nombreFoto) {

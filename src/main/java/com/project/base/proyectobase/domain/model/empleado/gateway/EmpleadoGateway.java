@@ -19,5 +19,5 @@ public interface EmpleadoGateway {
 
     Page<Empleado> buscarTodos(Pageable pageable);
 
-    String copiar(MultipartFile archivo) throws IOException;
+    String copiar(MultipartFile archivo);
 }

@@ -6,7 +6,6 @@ import com.project.base.proyectobase.domain.model.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -16,14 +15,11 @@ public class UploadUseCase {
 
     private final EmpleadoGateway empleadoGateway;
 
-    public String cargarArchivo(MultipartFile archivo, String cedula) throws IOException {
-        String nombreArchivo = "";
+    public String cargarArchivo(MultipartFile archivo, String cedula) {
         Empleado empleado = empleadoGateway.consultarEmpleado(cedula);
         this.validarEmpleado(empleado);
-        if (!archivo.isEmpty()){
-            nombreArchivo = empleadoGateway.copiar(archivo);
-        }
-        return nombreArchivo;
+        if (Objects.isNull(archivo)) throw new BusinessException(BusinessException.Type.ARCHIVO_VACIO);
+        return empleadoGateway.copiar(archivo);
     }
 
     private void validarEmpleado(Empleado empleado){
