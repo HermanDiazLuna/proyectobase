@@ -30,7 +30,7 @@ services:
     environment:
       PMA_HOST: mysql-db  # Nombre del servicio MySQL
       PMA_USER: ${MYSQL_USER}
-      PMA_PASSWORD: ${MYSQL_DATABASE}
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "8081:80"  # Acceso a phpMyAdmin en el puerto 8081
     depends_on:
