@@ -23,13 +23,6 @@ public class SubirArchivoController {
         if (!"application/pdf".equals(archivo.getContentType())) {
             return ResponseEntity.badRequest().body("Solo se permiten archivos PDF");
         }
-        String nombreArchivo = "";
-
-        try {
-            nombreArchivo = uploadUseCase.cargarArchivo(archivo, cedula);
-        }catch (IOException exception){
-            System.out.println("exception = " + exception.getMessage());
-        }
-        return ResponseEntity.ok(nombreArchivo);
+        return ResponseEntity.ok(uploadUseCase.cargarArchivo(archivo, cedula));
     }
 }
